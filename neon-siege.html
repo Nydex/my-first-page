@@ -540,7 +540,7 @@ function spawnPickup(x,y,type,val){
   pickups.push({x,y,type,val,life:8,radius:8,bob:rnd(0,Math.PI*2),alive:true});
 }
 
-let drones=[];
+// drones array — no duplicate let declaration here
 function updateDrones(dt){
   if(player.droneCount===0){drones=[];return;}
   while(drones.length<player.droneCount){drones.push({angle:rnd(0,Math.PI*2),fireTimer:rnd(0,1.5)});}
