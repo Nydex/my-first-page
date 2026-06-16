@@ -671,6 +671,8 @@ function playerShoot(){
   spawnBurst(player.x+Math.cos(a)*player.radius,player.y+Math.sin(a)*player.radius,'#fff',4,{speed:80,life:0.12,radius:2});
 }
 
+let gameLoopRunning = false;
+
 function initGame(){
   player=createPlayer();
   bullets=[];enemies=[];particles=[];pickups=[];floatingTexts=[];drones=[];turrets=[];
@@ -682,6 +684,11 @@ function initGame(){
   document.getElementById('coin-shop').style.display='none';
   document.getElementById('start-screen').style.display='none';
   setTimeout(()=>startWave(),500);
+  // Only start the game loop once
+  if(!gameLoopRunning){
+    gameLoopRunning=true;
+    requestAnimationFrame(update);
+  }
 }
 
 let lastTime=0;
@@ -1097,8 +1104,8 @@ window.addEventListener('keyup',e=>{keys[e.code]=false;});
 window.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
 
 // ─── BUTTON WIRING ────────────────────────────────────────────────────────────
-document.getElementById('start-btn').addEventListener('click',()=>{initGame();requestAnimationFrame(update);});
-document.getElementById('restart-btn').addEventListener('click',()=>{initGame();});
+document.getElementById('start-btn').addEventListener('click',()=>initGame());
+document.getElementById('restart-btn').addEventListener('click',()=>initGame());
 document.getElementById('open-shop-death').addEventListener('click',()=>openShop());
 document.getElementById('open-shop-start').addEventListener('click',()=>openShop());
 document.getElementById('go-menu-btn').addEventListener('click',()=>{
@@ -1113,7 +1120,6 @@ document.getElementById('shop-play-btn').addEventListener('click',()=>{
 document.getElementById('shop-menu-btn').addEventListener('click',closeShopToMenu);
 
 refreshStartUI();
-requestAnimationFrame(update);
 </script>
 </body>
 </html>
